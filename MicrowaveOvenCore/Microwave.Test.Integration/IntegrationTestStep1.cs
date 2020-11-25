@@ -10,7 +10,7 @@ namespace Microwave.Test.Integration
     public class IntegrationTestStep1
     {
         private StringWriter str;
-        private Output _outputUT;
+        private IOutput _outputUT;
         private ILight _lightUT;
 
             [SetUp]
@@ -22,11 +22,17 @@ namespace Microwave.Test.Integration
                 _lightUT = new Light(_outputUT);
             }
 
+            
+
             [Test]
             public void Output_TurnOnCalledOnLight_LightIsTurnedOnWrittenOnConsole()
             {
-                _lightUT.TurnOn();
+                //Arrange
 
+                //Act
+                _lightUT.TurnOn();
+                
+                //Assert
                 Assert.That(str.ToString().Contains("Light is turned on"));
 
             }
@@ -34,8 +40,14 @@ namespace Microwave.Test.Integration
             [Test]
             public void Output_TurnOffCalledOnLight_LightIsTurnedOffWrittenOnConsole()
             {
+                //Arrange
+                _lightUT.TurnOn();
+                str.Flush();
+
+                //Act
                 _lightUT.TurnOff();
 
+                //Assert
                 Assert.That(str.ToString().Contains("Light is turned off"));
 
             }
