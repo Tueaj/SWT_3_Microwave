@@ -23,7 +23,7 @@ namespace Microwave.Test.Integration
         }
         
         [Test]
-        public void Output_ShowTimeCalledOnDisplay_DisplayShowsGivenTimeOnConsole()
+        public void Output_ShowTimeCalledOnDisplay_ShowsGivenTimeOnConsole()
         {
             //Arrange
             int min = 3;
@@ -38,7 +38,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Output_ShowPowerCalledOnDisplay_DisplayShowsGivenPowerOnConsole()
+        public void Output_ShowPowerCalledOnDisplay_ShowsGivenPowerOnConsole()
         {
             //Arrange
             int power = 500;
@@ -52,7 +52,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Output_ClearCalledOnDisplay_DisplayShowsDisplayClearedConsole()
+        public void Output_ClearCalledOnDisplay_ShowsDisplayClearedConsole()
         {
             //Arrange
 

@@ -23,7 +23,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Output_TurnOnCalledWith50PowerOnPowerTube_DisplayShowsPowerTubeWorksWithPowerOnConsole()
+        public void Output_TurnOnCalledWith50PowerOnPowerTube_ShowsPowerTubeWorksWithPowerOnConsole()
         {
             //Arrange
             int power = 50;
@@ -50,7 +50,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Output_TurnOnCalledWith1PowerOnPowerTube_DisplayShowsPowerTubeWorksWithPowerOnConsole()
+        public void Output_TurnOnCalledWith1PowerOnPowerTube_ShowsPowerTubeWorksWithPowerOnConsole()
         {
             //Arrange
             int power = 1;
@@ -63,7 +63,7 @@ namespace Microwave.Test.Integration
 
         }
         [Test]
-        public void Output_TurnOnCalledWith100PowerOnPowerTube_DisplayShowsPowerTubeWorksWithPowerOnConsole()
+        public void Output_TurnOnCalledWith100PowerOnPowerTube_ShowsPowerTubeWorksWithPowerOnConsole()
         {
             //Arrange
             int power = 100;
@@ -90,7 +90,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Output_TurnOffCalledOnPowerTube_DisplayShowsPowerTubeTurnedOffOnConsole()
+        public void Output_TurnOffCalledOnPowerTube_ShowsPowerTubeTurnedOffOnConsole()
         {
             //Arrange
             int power = 50;
