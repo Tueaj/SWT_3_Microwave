@@ -16,9 +16,11 @@ namespace Microwave.Classes.Boundary
 
         public void TurnOn(int power)
         {
-            if (power < 1 || 100 < power)
+            double powerAspercentage = Convert.ToDouble(power);
+            powerAspercentage = (powerAspercentage / 750) * 100;
+            if (powerAspercentage <= 0 || 100 < powerAspercentage)
             {
-                throw new ArgumentOutOfRangeException("power", power, "Must be between 1 and 100 (incl.)");
+                throw new ArgumentOutOfRangeException("power", power, "Must be between 1 and 750 (incl.)");
             }
 
             if (IsOn)

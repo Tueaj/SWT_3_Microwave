@@ -34,6 +34,8 @@ namespace Microwave.App
             // Simulate a simple sequence
 
             powerButton.Press();
+            powerButton.Press();
+            powerButton.Press();
 
             timeButton.Press();
 

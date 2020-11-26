@@ -44,6 +44,7 @@ namespace Microwave.Test.Integration
         [TestCase(50, 40)]
         [TestCase(1, 40)]
         [TestCase(100, 40)]
+        [TestCase(200, 40)]
         public void CookController_StartCookingCalled_PowertubeStarts(int power, int time)
         {
             //Arrange
@@ -56,7 +57,7 @@ namespace Microwave.Test.Integration
         }
 
         [TestCase(0, 40)]
-        [TestCase(101, 40)]
+        [TestCase(751, 40)]
         public void CookController_StartCookingCalled_InvalidPowertubeValues(int power, int time)
         {
             //Arrange

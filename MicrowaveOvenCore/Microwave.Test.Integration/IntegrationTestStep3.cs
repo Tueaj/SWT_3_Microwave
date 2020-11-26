@@ -39,7 +39,7 @@ namespace Microwave.Test.Integration
         }
 
         [TestCase(0)]
-        [TestCase(101)]
+        [TestCase(751)]
         public void Output_TurnOnCalledWith0PowerOnPowerTube_ArgumentOutOfRangeExceptionThrown(int p)
         {
             //Arrange
