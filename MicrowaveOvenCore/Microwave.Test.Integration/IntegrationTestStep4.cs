@@ -1,11 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
+using System.Threading;
 using Microwave.Classes.Boundary;
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
+using Timer = Microwave.Classes.Boundary.Timer;
 
 namespace Microwave.Test.Integration
 {
@@ -88,16 +92,34 @@ namespace Microwave.Test.Integration
             Assert.That(str.ToString().Contains($"PowerTube turned off"));
         }
 
-        [Test]
-        public void CookController_StartCooking_TimerSendsTick()
+        [TestCase(50,2)]
+        [TestCase(50, 5)]
+        [TestCase(50, 10)]
+        [TestCase(50, 62)]
+        public void CookController_StartCooking_TimerSendsTick(int power, int time)
         {
             //Arrange
-            CookControllerUT.StartCooking(50, 10);
-            //Act
-            
-            //Assert
-            Assert.That(str.ToString().Contains($"Display shows: {00:D2}:{09:D2}"));
-        }
+            AutoResetEvent pause = new AutoResetEvent(false);
+            StringWriter srExpect = new StringWriter();
 
+            TimerUT.Expired += delegate(object sender, EventArgs e) { pause.Set(); };
+
+            //Act
+            CookControllerUT.StartCooking(power, time);
+            int ticks = time;
+
+            //Assert
+            srExpect.WriteLine($"PowerTube works with {power}");
+            for (int i = 0; i < ticks; i++)
+            {
+                srExpect.WriteLine($"Display shows: {(time-1) / 60:D2}:{(time-1) % 60:D2}");
+                time--;
+            }
+            srExpect.WriteLine($"PowerTube turned off");
+
+            pause.WaitOne(ticks * 1000 + 500);
+
+            Assert.That(srExpect.ToString(), Is.EqualTo(str.ToString()));
+        }
     }
 }
