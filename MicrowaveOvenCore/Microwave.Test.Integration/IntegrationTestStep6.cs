@@ -55,7 +55,7 @@ namespace Microwave.Test.Integration
         {
             //Arrange
             //Setting state to SETPOWER
-            _powerButton.Press();
+            _powerButton.Pressed += Raise.Event();
 
             //Act
             _doorUT.Open();

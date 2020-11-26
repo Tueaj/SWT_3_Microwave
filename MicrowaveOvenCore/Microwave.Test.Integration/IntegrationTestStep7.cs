@@ -44,7 +44,6 @@ namespace Microwave.Test.Integration
         }
 
         #region ButtonPressing
-
         [Test]
         public void Output_powerButtonPressed_ShowsPowerOn50OnConsole()
         {
@@ -56,8 +55,6 @@ namespace Microwave.Test.Integration
 
             //Assert
             Assert.That(str.ToString().Contains($"Display shows: 50 W"));
-
-
         }
 
         [TestCase(1,50)]
@@ -86,8 +83,6 @@ namespace Microwave.Test.Integration
 
             //Assert
             Assert.That(str.ToString().Contains($"Display shows: {power} W"));
-
-
         }
 
         [TestCase(1, "01")]
@@ -116,7 +111,7 @@ namespace Microwave.Test.Integration
 
         
         [Test]
-        public void Output_StartCancelButtonPressed_ShowsDisplayCleared()
+        public void Output_StartCancelButtonPressedFromREADYState_ShowsDisplayCleared()
         {
             //Arrange
             _powerButtonUT.Press();
@@ -128,11 +123,9 @@ namespace Microwave.Test.Integration
             //Assert
             Assert.That(str.ToString().Contains("Display cleared"));
         }
-        
 
-        
         [Test]
-        public void Output_StartCancelButtonPressed_lightTurnOnCalled()
+        public void Output_StartCancelButtonPressedFromSETTIMEState_ShowsLightInOn()
         {
             //Arrange
             _powerButtonUT.Press(); //Assuring UserInterface is in SETPOWER state.
@@ -140,97 +133,200 @@ namespace Microwave.Test.Integration
             StringBuilder sb = str.GetStringBuilder().Clear();
 
             //Act
+            _startCancelButtonUT.Press();
 
+            //Assert
+            Assert.That(str.ToString().Contains("Light is turned on"));
+        }
+
+        [Test]
+        public void Output_StartCancelButtonPressedFromSETTIMEState_ShowsPowertubeIsOn()
+        {
+            //Arrange
+            _powerButtonUT.Press(); //Assuring UserInterface is in SETPOWER state.
+            _timeButtonUT.Press(); //Assuring UserInterface is in SETTIME state.
+            StringBuilder sb = str.GetStringBuilder().Clear();
+
+            //Act
+            _startCancelButtonUT.Press();
+
+            //Assert
+            Assert.That(str.ToString().Contains($"PowerTube works with"));
+        }
+
+        [Test]
+        public void Output_StartCancelButtonPressedFromCOOKINGState_ShowsPowertubeIsOff()
+        {
+            //Arrange
+            _powerButtonUT.Press(); //Assuring UserInterface is in SETPOWER state.
+            _timeButtonUT.Press(); //Assuring UserInterface is in SETTIME state.
+            _startCancelButtonUT.Press();
+
+            //Act
+            _startCancelButtonUT.Press();
+
+            //Assert
+            Assert.That(str.ToString().Contains("PowerTube turned off"));
+        }
+
+        [Test]
+        public void Output_StartCancelButtonPressedFromCOOKINGState_ShowsLigtIsTurnedOff()
+        {
+            //Arrange
+            _powerButtonUT.Press(); //Assuring UserInterface is in SETPOWER state.
+            _timeButtonUT.Press(); //Assuring UserInterface is in SETTIME state.
+            _startCancelButtonUT.Press();
+
+            //Act
+            _startCancelButtonUT.Press();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Light is turned off"));
+        }
+        [Test]
+        public void Output_StartCancelButtonPressedFromCOOKINGState_ShowsDisplayCleared()
+        {
+            //Arrange
+            _powerButtonUT.Press(); //Assuring UserInterface is in SETPOWER state.
+            _timeButtonUT.Press(); //Assuring UserInterface is in SETTIME state.
+            _startCancelButtonUT.Press();
+
+            //Act
             _startCancelButtonUT.Press();
 
             //Assert
             Assert.That(str.ToString().Contains("Display cleared"));
-
-
         }
-
-        /*
-        [Test]
-        public void interfacSETTIMEEstate_StartCancelButtonPressed_CookerStartCookingnCalled()
-        {
-            //Arrange
-
-            powerButton.Press(); //Assuring UserInterface is in SETPOWER state.
-            timeButton.Press(); //Assuring UserInterface is in SETTIME state.
-
-            //Act
-
-            startCancelButton.Press();
-
-            //Assert
-
-            cookController.ReceivedWithAnyArgs().StartCooking(Arg.Any<int>(), Arg.Any<int>());
-
-
-        }
-
-        [Test]
-        public void interfaceCOOKINGstate_StartCancelButtonPressed_CookerSTOPCalled()
-        {
-            //Arrange
-
-            powerButton.Press(); //Assuring UserInterface is in SETPOWER state.
-            timeButton.Press(); //Assuring UserInterface is in SETTIME state.
-            startCancelButton.Press(); //Assuring UserInterface is in COOKING state
-
-            //Act
-
-            startCancelButton.Press();
-
-            //Assert
-
-            cookController.Received().Stop();
-
-
-        }
-
-        [Test]
-        public void interfaceCOOKINGstate_StartCancelButtonPressed_LightOFFCalled()
-        {
-            //Arrange
-
-            powerButton.Press(); //Assuring UserInterface is in SETPOWER state.
-            timeButton.Press(); //Assuring UserInterface is in SETTIME state.
-            startCancelButton.Press(); //Assuring UserInterface is in COOKING state
-
-            //Act
-
-            startCancelButton.Press();
-
-            //Assert
-
-            light.Received().TurnOff();
-
-
-        }
-
-        [Test]
-        public void interfaceCOOKINGstate_StartCancelButtonPressed_DisplayCLEARCalled()
-        {
-            //Arrange
-
-            powerButton.Press(); //Assuring UserInterface is in SETPOWER state.
-            timeButton.Press(); //Assuring UserInterface is in SETTIME state.
-            startCancelButton.Press(); //Assuring UserInterface is in COOKING state
-
-            //Act
-
-            startCancelButton.Press();
-
-            //Assert
-
-            display.Received().Clear();
-
-
-        }
-        */
         #endregion
 
+        #region DoorSimunlation
 
+        [Test]
+        public void Output_OnDoorOpenedEventAtREADYState_ShowsLightIsTurnedOn()
+        {
+            //Arrange
+            //State start at READY State
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Light is turned on"));
+        }
+
+        [Test]
+        public void Output_OnDoorOpenedEventAtSETPOWERState_ShowsLightIsTurnedOn()
+        {
+            //Arrange
+            //Setting state to SETPOWER
+            _powerButtonUT.Press();
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Light is turned on"));
+        }
+        
+        [Test]
+        public void Output_OnDoorOpenedEventAtSETPOWERState_ShowsDisplayIsCleared()
+        {
+            //Arrange
+            //Setting state to SETPOWER
+            _powerButtonUT.Press();
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Display cleared"));
+        }
+        
+        [Test]
+        public void Output_OnDoorOpenedEventAtSETTIMEState_ShowsLightIsTurnedOn()
+        {
+            //Arrange
+            //Setting state to SETPOWER
+            _powerButtonUT.Press();
+            //Setting state to SETTIME
+            _timeButtonUT.Press();
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Light is turned on"));
+        }
+        
+        [Test]
+        public void Output_OnDoorOpenedEventAtSETTIMEState_ShowsDisplayIsCleared()
+        {
+            //Arrange
+            //Setting state to SETPOWER
+            _powerButtonUT.Press();
+            //Setting state to SETTIME
+            _timeButtonUT.Press();
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Display cleared"));
+        }
+
+        
+        [Test]
+        public void Output_OnDoorOpenedEventAtCOOKINGState_ShowsPowertubeIsOff()
+        {
+            //Arrange
+            //Setting state to SETPOWER
+            _powerButtonUT.Press();
+            //Setting state to SETTIME
+            _timeButtonUT.Press();
+            //Setting state to COOKING
+            _startCancelButtonUT.Press();
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("PowerTube turned off"));
+        }
+        
+        [Test]
+        public void Output_OnDoorOpenedEventAtCOOKINGState_ShowsDisplayIsCleared()
+        {
+            //Arrange
+            //Setting state to SETPOWER
+            _powerButtonUT.Press();
+            //Setting state to SETTIME
+            _timeButtonUT.Press();
+            //Setting state to COOKING
+            _startCancelButtonUT.Press();
+
+            //Act
+            _doorUT.Open();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Display cleared"));
+        }
+        
+        [Test]
+        public void Output_OnDoorClosedEventAtDOOROPENState_LightRecivedTurnOffCall()
+        {
+            //Arrange
+            //Setting state to DOOROPEN
+            _doorUT.Open();
+
+            //Act
+            _doorUT.Close();
+
+            //Assert
+            Assert.That(str.ToString().Contains("Light is turned off"));
+        }
+        
+
+    } 
+        #endregion
+    
     }
-}
