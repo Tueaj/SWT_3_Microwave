@@ -88,5 +88,16 @@ namespace Microwave.Test.Integration
             Assert.That(str.ToString().Contains($"PowerTube turned off"));
         }
 
+        [Test]
+        public void CookController_StartCooking_TimerSendsTick()
+        {
+            //Arrange
+            CookControllerUT.StartCooking(50, 10);
+            //Act
+            
+            //Assert
+            Assert.That(str.ToString().Contains($"Display shows: {00:D2}:{09:D2}"));
+        }
+
     }
 }
