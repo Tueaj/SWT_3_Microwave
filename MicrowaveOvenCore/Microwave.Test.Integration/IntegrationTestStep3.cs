@@ -69,7 +69,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Output_TurnOnCalledWith0PowerOnPowerTube_ApplicationExceptionThrown()
+        public void Output_TurnOnCalledWhilePowerTubeOn_ApplicationExceptionThrown()
         {
             //Arrange
             int power = 50;

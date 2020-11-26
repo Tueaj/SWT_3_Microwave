@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Microwave.Classes.Boundary;
 using Microwave.Classes.Interfaces;
 using NUnit.Framework;
@@ -42,7 +43,8 @@ namespace Microwave.Test.Integration
             {
                 //Arrange
                 _lightUT.TurnOn();
-                str.Flush();
+                StringBuilder sb = str.GetStringBuilder().Clear();
+            
 
                 //Act
                 _lightUT.TurnOff();
